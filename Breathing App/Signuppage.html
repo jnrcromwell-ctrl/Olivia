@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditate</title>
+    <link rel="stylesheet" href="log.sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-particles">
+        <h1>MEDIATE</h1>
+    </div>
+
+    <div class="container-form">
+        <div class="sign-up-wrapper">
+            <form onsubmit="handleSignup(event)">
+                <h1>Create An Account</h1>
+                <div class="social">
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-facebook"></i></a>
+                    </div>
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-twitter"></i></a>
+                    </div>
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-google"></i></a>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="firstName" placeholder="First Name">
+                    <input type="text" id="lastName" placeholder="Last Name">
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="password" id="password" placeholder="Password">
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password">
+                                    
+                <button class="btn-homee" type="submit">
+                    SIGNUP
+                </button>
+                </div>
+            </form>
+        </div>
+   
+        <div class="overlay">
+            
+            <div class="overlay-right">
+                <h1>Hello, Friend</h1>
+                <p>Enter your credentials to start your journey with us.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple hash function for demonstration
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash.toString();
+        }
+
+        function handleSignup(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validation
+            if (!firstName || !lastName || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const existingUser = users.find(user => user.email === email);
+            if (existingUser) {
+                alert('User with this email already exists.');
+                return;
+            }
+
+            // Hash the password
+            const hashedPassword = simpleHash(password);
+
+            // Store user data
+            const user = {
+                firstName,
+                lastName,
+                email,
+                password: hashedPassword
+            };
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Sign-up successful! Redirecting to login page.');
+
+            // Redirect to login page
+            window.location.href = 'Login.html';
+        }
+    </script>
+ </body>
+</html>

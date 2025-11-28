@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditate</title>
+    <link rel="stylesheet" href="Breathing App.css">
+</head>
+<body>
+    <div class="bg-particles"></div>
+
+    <div class="container">
+        <h1>Calm</h1>
+        <p class="subtitle">Find Your Inner Peace.</p>
+
+        <div class="breathing-circle" onclick="toggleBreathing()">
+            <div class="circle" id="breathingCircle">
+                <div style="color:white; font-size: 1.2rem; font-weight: 500; z-index: 2;">Breathe</div>
+            </div>
+        </div>
+
+        <div class="instruction" id="instruction">Click the circle to begin</div>
+         <div class="timer-display" id="timer">00:00</div>
+        <div class="controls">
+            <button class="btn" id="playBtn" onclick="toggleBreathing()">Start</button>
+            <button class="btn" onclick="resetSession()">Reset</button>
+        </div>
+         <button class="btn-homee" onclick="document.location='Homepage.html'">HOME</button>
+
+       
+    </div>
+    <script src="Breathing App.js"></script>
+</body>
+</html>

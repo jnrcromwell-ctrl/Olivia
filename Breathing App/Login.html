@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditate</title>
+    <link rel="stylesheet" href="log.sign.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-particles">
+        <h1>MEDIATE</h1>
+    </div>
+     <div class="container-form">
+        <div class="sign-up-wrapper">
+            <form onsubmit="handleLogin(event)">
+                <h1>Log In</h1>
+                <div class="social">
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-facebook"></i></a>
+                    </div>
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-twitter"></i></a>
+                    </div>
+                    <div>
+                        <a href="#"><i class=" fa-brands fa-google"></i></a>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="name" placeholder="Name">
+                    <input type="email" id="email" placeholder="Email">
+                    <input type="password" id="password" placeholder="Password">
+                    <button id="signin-btn" type="submit">Sign In</button>
+                </div>
+            </form>
+        </div>
+
+            <div class="overlay-left">
+                <h1>Welcome Back</h1>
+                <p>To stay connected with us please Login with your credentials.</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple hash function for demonstration (same as signup)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return hash.toString();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Validation
+            if (!name || !email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email);
+
+            if (!user) {
+                alert('No account found with this email.');
+                return;
+            }
+
+            // Check name matches firstName
+            if (user.firstName !== name) {
+                alert('Incorrect name.');
+                return;
+            }
+
+            // Hash the input password and compare
+            const hashedPassword = simpleHash(password);
+            if (user.password !== hashedPassword) {
+                alert('Incorrect password.');
+                return;
+            }
+
+            // If all checks pass, redirect to loading.html
+            window.location.href = 'loading.html';
+        }
+    </script>
+
+ </body>
+</html>
